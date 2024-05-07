@@ -1,0 +1,1 @@
+C:\Users\Jason\Documents\Visual Studio 2022\WpfGameEngine\clrGameEngineLibrary\x64\Debug\clrGameEngineLibrary.vcxproj.AssemblyReference.cache

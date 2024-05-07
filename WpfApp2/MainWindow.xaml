@@ -1,0 +1,175 @@
+﻿<Window x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="Auto" Width="Auto" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition x:Name="LeftCanvasColumn" Width="205"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition  Width="400"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition x:Name="TopCanvasRow" Height="400"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="50"/>
+
+        </Grid.RowDefinitions>
+        <GridSplitter Grid.Row="1" Grid.Column="2" Grid.RowSpan="4"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Center"                    
+                      Width="6">
+        </GridSplitter>
+        <GridSplitter Grid.Row="2" Grid.Column="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      Grid.ColumnSpan="4"
+                      Height="6">
+        </GridSplitter>
+
+        <GridSplitter Grid.Row="1" Grid.Column="3"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Center"
+                      Grid.RowSpan="4"
+                      Width="6">
+        </GridSplitter>
+        <GridSplitter Grid.Row="4" Grid.Column="0"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      Grid.ColumnSpan="4"
+                      Height="6">
+        </GridSplitter>
+        <ToolBarTray  Grid.Column="0" Grid.Row="0">
+            <ToolBar>
+                <Menu>
+                    <MenuItem Header="File">
+                        <MenuItem Header="New"></MenuItem>
+                        <MenuItem Header="Open"></MenuItem>
+                        <MenuItem Header="Save"></MenuItem>
+                    </MenuItem>
+                </Menu>
+            </ToolBar>
+        </ToolBarTray>
+        <ToolBar Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
+                 Height="30" Canvas.Left="0" Canvas.Top="0" Width="800" HorizontalAlignment="Stretch">
+
+            <Button x:Name="MoveButton">
+                <Border x:Name="MoveBorder">
+                    <Image Source="/move_cursor.JPG"  MouseDown="MoveButton_MouseDown"/>
+                </Border>
+            </Button>
+            <Button x:Name="RotateButton">
+                <Border x:Name="RotateBorder">
+                    <Image Source="/rotate.JPG" MouseDown="RotateButton_MouseDown" />
+                </Border>
+            </Button>
+            <Button x:Name="ScaleButton">
+                <Border x:Name="ScaleBorder">
+                    <Image Source="/scale.JPG" MouseDown="ScaleButton_MouseDown" />
+                </Border>
+            </Button>
+            <Button x:Name="ArrowButton">
+                <Border x:Name="ArrowBorder">
+                    <Image Source="/arrow.png" MouseDown="ArrowButton_MouseDown" />
+                </Border>
+            </Button>
+            <Button x:Name="CubeButton">
+                <Border x:Name="CubeBorder" BorderBrush="SlateBlue" BorderThickness="1,1,1,1" >
+                    <Image Source="/cube.JPG" MouseDown="CubeButton_MouseDown" />
+                </Border>
+            </Button>
+            <Button x:Name="PlayButton">
+                <Border x:Name="PlayBorder" >
+                    <Image Source="/play.png" MouseDown="PlayButton_MouseDown" />
+                </Border>
+            </Button>
+            <Button x:Name="CameraButton">
+                <Border x:Name="CameraBorder" >
+                    <Image Source="/camera.png" MouseDown="CameraButton_MouseDown"/>
+                </Border>
+            </Button>
+        </ToolBar>
+        <Image x:Name="TopLeftCanvas" Source="/game.png" Stretch="Fill" Grid.Column="1" Grid.Row="2" MouseDown="TopLeftCanvas_MouseDown" MouseUp="TopLeftCanvas_MouseUp" 
+                MouseMove="TopLeftCanvas_MouseMove" HorizontalAlignment="Stretch" MouseWheel="TopLeftCanvas_MouseWheel" />
+
+        <Canvas x:Name="TopRightCanvas" Background="Red"
+                    Grid.Column="3" Grid.Row="2"
+                    HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"/>
+
+        <Canvas x:Name="BottomLeftCanvas" Background="Green"
+                    Grid.Column="1" Grid.Row="4"
+                    HorizontalAlignment="Stretch" >
+
+        </Canvas>
+        <!--<Canvas x:Name="BottomRightCanvas" Background="Blue"
+                    Grid.Column="3" Grid.Row="4"
+                    HorizontalAlignment="Stretch" >-->
+        <Viewport3D Grid.Column="3" Grid.Row="4">
+                <Viewport3D.Camera>
+                    <PerspectiveCamera Position="-20,20,20" LookDirection="10,-10,-10" UpDirection="0,1,0">                        
+                    </PerspectiveCamera>                    
+                </Viewport3D.Camera>
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <DirectionalLight Color="White" Direction="-1,-1,-1" />
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <!--<MeshGeometry3D Positions="-1,0,0 0,1,0 1,0,0" TriangleIndices="0,2,1"/>-->
+                            <MeshGeometry3D Positions="0,0,0 10,0,0 0,10,0 10,10,0
+                                                           0,0,10 10,0,10 0,10,10 10,10,10" 
+                                                TriangleIndices="0,2,1 1,2,3 0,4,2 2,4,6
+                                                                 0,1,4 1,5,4 1,7,5 1,3,7
+                                                                 4,5,6 7,6,5 2,6,3 3,6,7"/>
+                        </GeometryModel3D.Geometry>
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial Brush="Yellow"/>                                
+                            </GeometryModel3D.Material>
+                        </GeometryModel3D>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D>
+        <!--</Canvas>-->
+        
+        <TreeView Grid.Column="0" HorizontalAlignment="Left" Height="800" Margin="20,0,20,0" VerticalAlignment="Top" Width="250" Grid.RowSpan="3" Grid.ColumnSpan="1" Grid.Row="2">
+            <TreeViewItem>
+                <TreeViewItem.Header>
+                    <StackPanel Orientation="Horizontal">
+
+                        <Label Content="North America"></Label>
+                    </StackPanel>
+                </TreeViewItem.Header>
+
+                <!-- Child Item -->
+
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+
+                            <Label Content="USA"></Label>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+
+        </TreeView>
+        <Label x:Name="PositionLabel" Grid.Column="1" Content="(x,y)" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="5" VerticalAlignment="Center"/>
+        <!--Label  Grid.Column="6" Content="Label" HorizontalAlignment="Left" Margin="62,97,0,0" Grid.Row="2" VerticalAlignment="Top"/-->
+        <TextBlock x:Name="Position2Label" Grid.Column="6" HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="769" Grid.ColumnSpan="1" Grid.RowSpan="3"/>
+        <!--<Button Content="Button" Click="Button_Click" Grid.Column="4" HorizontalAlignment="Left" Margin="85,281,-160,0" Grid.Row="2" VerticalAlignment="Top" Width="75"/>-->
+    </Grid>
+</Window>
